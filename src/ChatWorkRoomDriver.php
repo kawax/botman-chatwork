@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
-use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class ChatWorkRoomDriver extends HttpDriver
 {
@@ -158,7 +157,8 @@ class ChatWorkRoomDriver extends HttpDriver
             self::API_ENDPOINT . 'rooms/' . $this->room_id . '/messages',
             [],
             $payload,
-            $headers);
+            $headers
+        );
 
         return $res;
     }

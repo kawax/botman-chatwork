@@ -9,16 +9,16 @@ https://botman.io/
 - Laravel >= 5.5
 
 ## Demo
-https://www.chatwork.com/g/botman
-https://github.com/kawax/botman-chatwork-project
-https://botman.kawax.biz/
+- https://www.chatwork.com/g/botman
+- https://github.com/kawax/botman-chatwork-project
+- https://botman.kawax.biz/
 
 ## Installation
 
 ### BotMan Studio
-Create new project by BotMan Studio
-https://botman.io/2.0/botman-studio
-https://github.com/botman/studio
+Create new project by BotMan Studio  
+https://botman.io/2.0/botman-studio  
+https://github.com/botman/studio  
 
 ### Composer
 ```
@@ -39,7 +39,7 @@ CHATWORK_WEBHOOK_ACCOUNT_TOKEN=
 
 ### app/Providers/BotMan/DriverServiceProvider.php
 
-Set ChatWorkRoomDriver or ChatWorkAccountDriver or both.
+Set ChatWorkRoomDriver or ChatWorkAccountDriver or both.  
 ここで設定したドライバーが有効化される。
 
 ```php
