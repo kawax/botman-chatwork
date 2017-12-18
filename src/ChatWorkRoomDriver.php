@@ -29,6 +29,8 @@ class ChatWorkRoomDriver extends HttpDriver
 
     protected $messages = [];
 
+    protected $room_id = '';
+
     /**
      * @var HeaderBag
      */
@@ -112,7 +114,33 @@ class ChatWorkRoomDriver extends HttpDriver
             $payload['body'] = $this->getReply($matchingMessage) . $message;
         }
 
+        if (empty($matchingMessage->getRecipient())) {
+            // say
+            $this->room_id = $matchingMessage->getSender();
+        } else {
+            // reply
+            $this->room_id = $matchingMessage->getRecipient();
+        }
+
         return $payload;
+    }
+
+    /**
+     *
+     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
+     *
+     * @return string
+     */
+    public function getReply(IncomingMessage $matchingMessage)
+    {
+        // reply
+        if (!empty($matchingMessage->getRecipient())) {
+            $payload = $matchingMessage->getPayload();
+
+            return "[rp aid={$payload->get(static::ACCOUNT_ID)} to={$payload->get('room_id')}-{$payload->get('message_id')}]\n";
+        }
+
+        return '';
     }
 
     /**
@@ -127,7 +155,7 @@ class ChatWorkRoomDriver extends HttpDriver
         ];
 
         $res = $this->http->post(
-            self::API_ENDPOINT . 'rooms/' . $this->event->get('room_id') . '/messages',
+            self::API_ENDPOINT . 'rooms/' . $this->room_id . '/messages',
             [],
             $payload,
             $headers);
@@ -141,21 +169,6 @@ class ChatWorkRoomDriver extends HttpDriver
     public function isConfigured()
     {
         return !empty($this->config->get('api_token'));
-    }
-
-    /**
-     *
-     * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
-     *
-     * @return string
-     */
-    public function getReply(IncomingMessage $matchingMessage)
-    {
-        $payload = $matchingMessage->getPayload();
-
-        $rp = "[rp aid={$payload->get(static::ACCOUNT_ID)} to={$payload->get('room_id')}-{$payload->get('message_id')}]\n";
-
-        return $rp;
     }
 
     /**
