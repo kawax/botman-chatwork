@@ -42,6 +42,6 @@ class ChatWorkDriverServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        //
+        return [];
     }
 }
