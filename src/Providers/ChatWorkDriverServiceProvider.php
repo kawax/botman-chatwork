@@ -21,7 +21,7 @@ class ChatWorkDriverServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../stubs/chatwork.php' => config_path('botman/chatwork.php'),
+            __DIR__ . '/../../stubs/chatwork.php' => config_path('botman/chatwork.php'),
         ]);
     }
 
