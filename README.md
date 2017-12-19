@@ -93,6 +93,17 @@ https://www.chatwork.com/service/packages/chatwork/subpackages/api/token.php
 メッセージの投稿に必要なAPIトークン。
 https://www.chatwork.com/service/packages/chatwork/subpackages/api/token.php
 
+### Use another API Token
+
+```php
+$botman->hears('Hi', function ($bot) {
+    $bot->reply('Hello!', ['api_token' => '...']);
+});
+```
+
+```php
+$botman->say('say()', 'Room ID', ChatWorkAccountDriver::class, ['api_token' => '...']);
+```
 
 ## Supported Features
 Basic hears-reply only.

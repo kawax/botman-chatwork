@@ -99,7 +99,6 @@ class ChatWorkRoomDriver extends HttpDriver
      * @param string|OutgoingMessage|Question $message
      * @param IncomingMessage                 $matchingMessage
      * @param array                           $additionalParameters
-     *s
      *
      * @return array
      */
@@ -120,6 +119,8 @@ class ChatWorkRoomDriver extends HttpDriver
             // reply
             $this->room_id = $matchingMessage->getRecipient();
         }
+
+        $payload['api_token'] = $additionalParameters['api_token'] ?: $this->config->get('api_token');
 
         return $payload;
     }
@@ -149,8 +150,10 @@ class ChatWorkRoomDriver extends HttpDriver
      */
     public function sendPayload($payload)
     {
+        $api_token = $payload['api_token'] ?: $this->config->get('api_token');
+
         $headers = [
-            'X-ChatWorkToken: ' . $this->config->get('api_token'),
+            'X-ChatWorkToken: ' . $api_token,
         ];
 
         $res = $this->http->post(
@@ -196,8 +199,10 @@ class ChatWorkRoomDriver extends HttpDriver
      */
     public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage)
     {
+        $api_token = $parameters['api_token'] ?: $this->config->get('api_token');
+
         $headers = [
-            'X-ChatWorkToken: ' . $this->config->get('api_token'),
+            'X-ChatWorkToken: ' . $api_token,
         ];
 
         return $this->http->post(self::API_ENDPOINT . $endpoint, [], $parameters, $headers);
