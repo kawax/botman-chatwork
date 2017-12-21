@@ -120,7 +120,7 @@ class ChatWorkRoomDriver extends HttpDriver
             $this->room_id = $matchingMessage->getRecipient();
         }
 
-        $payload['api_token'] = $additionalParameters['api_token'] ?: $this->config->get('api_token');
+        $payload['api_token'] = $additionalParameters['api_token'] ?? $this->config->get('api_token');
 
         return $payload;
     }
@@ -150,7 +150,7 @@ class ChatWorkRoomDriver extends HttpDriver
      */
     public function sendPayload($payload)
     {
-        $api_token = $payload['api_token'] ?: $this->config->get('api_token');
+        $api_token = $payload['api_token'] ?? $this->config->get('api_token');
 
         $headers = [
             'X-ChatWorkToken: ' . $api_token,
