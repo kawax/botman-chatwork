@@ -26,8 +26,14 @@ class ChatWorkRoomDriver extends HttpDriver
 
     const ACCOUNT_ID = 'account_id';
 
+    /**
+     * @var array
+     */
     protected $messages = [];
 
+    /**
+     * @var string
+     */
     protected $room_id = '';
 
     /**
@@ -54,7 +60,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return bool
      */
-    public function matchesRequest()
+    public function matchesRequest(): bool
     {
         return $this->validateSignature() && $this->payload->get('webhook_event_type') === static::EVENT_TYPE;
     }
@@ -64,7 +70,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return \BotMan\BotMan\Messages\Incoming\Answer
      */
-    public function getConversationAnswer(IncomingMessage $message)
+    public function getConversationAnswer(IncomingMessage $message): Answer
     {
         return Answer::create($message->getText())->setMessage($message);
     }
@@ -74,7 +80,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return array
      */
-    public function getMessages()
+    public function getMessages(): array
     {
         if (empty($this->messages)) {
             $messageText = $this->event->get('body');
@@ -90,7 +96,7 @@ class ChatWorkRoomDriver extends HttpDriver
     /**
      * @return bool
      */
-    protected function isBot()
+    protected function isBot(): bool
     {
         return false;
     }
@@ -102,7 +108,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return array
      */
-    public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
+    public function buildServicePayload($message, $matchingMessage, $additionalParameters = []): array
     {
         if ($message instanceof Question) {
             $payload['body'] = $this->getReply($matchingMessage) . $message->getText();
@@ -131,7 +137,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return string
      */
-    public function getReply(IncomingMessage $matchingMessage)
+    public function getReply(IncomingMessage $matchingMessage): string
     {
         // reply
         if (!empty($matchingMessage->getRecipient())) {
@@ -148,7 +154,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return Response
      */
-    public function sendPayload($payload)
+    public function sendPayload($payload): Response
     {
         $api_token = $payload['api_token'] ?? $this->config->get('api_token');
 
@@ -169,7 +175,7 @@ class ChatWorkRoomDriver extends HttpDriver
     /**
      * @return bool
      */
-    public function isConfigured()
+    public function isConfigured(): bool
     {
         return !empty($this->config->get('api_token'));
     }
@@ -181,7 +187,7 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return User
      */
-    public function getUser(IncomingMessage $matchingMessage)
+    public function getUser(IncomingMessage $matchingMessage): User
     {
         $payload = $matchingMessage->getPayload();
 
@@ -197,9 +203,9 @@ class ChatWorkRoomDriver extends HttpDriver
      *
      * @return Response
      */
-    public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage)
+    public function sendRequest($endpoint, array $parameters, IncomingMessage $matchingMessage): Response
     {
-        $api_token = $parameters['api_token'] ?: $this->config->get('api_token');
+        $api_token = $parameters['api_token'] ?? $this->config->get('api_token');
 
         $headers = [
             'X-ChatWorkToken: ' . $api_token,
@@ -211,7 +217,7 @@ class ChatWorkRoomDriver extends HttpDriver
     /**
      * @return bool
      */
-    protected function validateSignature()
+    protected function validateSignature(): bool
     {
         $known = $this->headers->get('X-ChatWorkWebhookSignature', '');
 

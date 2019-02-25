@@ -5,7 +5,7 @@ https://go.chatwork.com/
 https://botman.io/  
 
 ## Requirements
-- PHP >= 7.0
+- PHP >= 7.1
 - Laravel >= 5.5
 
 ## Demo

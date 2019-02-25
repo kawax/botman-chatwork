@@ -7,13 +7,6 @@ use Illuminate\Support\ServiceProvider;
 class ChatWorkDriverServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * Bootstrap the application services.
      *
      * @return void
@@ -33,15 +26,5 @@ class ChatWorkDriverServiceProvider extends ServiceProvider
     public function register()
     {
         //
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return string[]
-     */
-    public function provides()
-    {
-        return [];
     }
 }
