@@ -11,7 +11,7 @@ https://botman.io/
 ## Demo
 - https://www.chatwork.com/g/botman
 - https://github.com/kawax/botman-chatwork-project
-- https://botman.kawax.biz/
+- ~~https://botman.kawax.biz/~~
 
 ## Installation
 
